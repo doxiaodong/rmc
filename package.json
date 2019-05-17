@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "compile": "umi-lib build",
+    "lint": "npm run prettier -- -l",
+    "format": "npm run prettier -- --write",
+    "prettier": "prettier \"packages/src/**/*.{ts,tsx}\"",
+    "ci": "npm run lint && npm run compile"
+  },
+  "devDependencies": {
+    "husky": "^2.3.0",
+    "prettier": "^1.17.1",
+    "umi-library": "^1.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run ci"
+    }
+  }
+}
