@@ -3,7 +3,7 @@
     "compile": "umi-lib build",
     "lint": "npm run prettier -- -l",
     "format": "npm run prettier -- --write",
-    "prettier": "prettier \"packages/src/**/*.{ts,tsx}\"",
+    "prettier": "prettier \"packages/*/src/**/*.{ts,tsx}\"",
     "ci": "npm run lint && npm run compile"
   },
   "devDependencies": {
