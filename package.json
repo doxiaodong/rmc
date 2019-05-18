@@ -5,13 +5,13 @@
     "lint": "npm run prettier -- -l",
     "format": "npm run prettier -- --write",
     "prettier": "prettier \"packages/*/src/**/*.{ts,tsx}\"",
-    "ci": "npm run lint && types-test && npm run test && npm run compile",
+    "ci": "npm run lint && npm run types-test && npm run test && npm run compile",
     "doc": "umi-lib doc dev",
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
+    "prepub": "npm run ci",
     "pub": "lerna publish",
-    "pub:next": "lerna publish --npm-tag=next",
     "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {

@@ -11,12 +11,12 @@ base: &base
     - run:
         name: Install dependencies
         command: npm i
-    - run:
-        name: Build
-        command: npm run ci
     -run:
         name: Lerna Bootstrap
         command: npm run bootstrap
+    - run:
+        name: Build
+        command: npm run ci
     - run:
         name: Report coverage
         command: npm run codecov
@@ -36,6 +36,7 @@ jobs:
     docker:
       - image: circleci/node:12
 
+  # lerna 好像和 ci release 有些冲突
   publish:
     docker:
       - image: circleci/node:10
@@ -44,11 +45,6 @@ jobs:
       - checkout
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
-      - run:
-          name: Build
-          command: |
-            npm i
-            npm run ci
       - run:
           name: Publish
           command: |

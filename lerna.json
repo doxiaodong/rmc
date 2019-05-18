@@ -2,9 +2,6 @@
   "publish": {
     "message": "release: publish"
   },
-  "bootstrap": {
-    "npmClientArgs": ["--no-package-lock"]
-  },
   "packages": ["packages/*"],
   "version": "independent"
 }

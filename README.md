@@ -7,6 +7,7 @@
 - [x] Coverage show ? codecov
 - [ ] lerna Publish
 - [ ] lerna-changelog
+- [ ] circleci
 
 ### packages
 
