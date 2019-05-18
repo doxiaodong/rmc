@@ -5,7 +5,6 @@ base: &base
   docker:
     - image: circleci/node:10
   steps:
-    - checkout
     - restore_cache:
         key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
     - run:
@@ -41,7 +40,6 @@ jobs:
       - image: circleci/node:10
     working_directory: *working_directory
     steps:
-      - checkout
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
       - run:
@@ -58,7 +56,6 @@ jobs:
       - image: circleci/node:10
     working_directory: *working_directory
     steps:
-      - checkout
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
       - run:
@@ -87,7 +84,7 @@ workflows:
   # doc when master branch update
   doc-deploy:
     jobs:
-      - publish:
+      - doc:
           filters:
             branches:
               only: master
