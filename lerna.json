@@ -2,6 +2,7 @@
   "publish": {
     "message": "release: publish"
   },
+  "npmClient": "npm",
   "packages": ["packages/*"],
   "version": "independent"
 }
