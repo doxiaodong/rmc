@@ -4,12 +4,19 @@
     "lint": "npm run prettier -- -l",
     "format": "npm run prettier -- --write",
     "prettier": "prettier \"packages/*/src/**/*.{ts,tsx}\"",
-    "ci": "npm run lint && npm run compile"
+    "ci": "npm run lint && npm run test && npm run compile",
+    "doc": "umi-lib doc dev",
+    "test": "umi-test",
+    "types-test": "tsc"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.9.2",
+    "@types/jest": "^24.0.13",
+    "@types/react": "^16.8.17",
     "husky": "^2.3.0",
     "prettier": "^1.17.1",
-    "umi-library": "^1.5.1"
+    "umi-library": "^1.5.1",
+    "umi-test": "^1.5.7"
   },
   "husky": {
     "hooks": {

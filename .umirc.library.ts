@@ -7,4 +7,7 @@ export default {
     },
   },
   runtimeHelpers: true,
+  doc: {
+    typescript: true,
+  },
 };
