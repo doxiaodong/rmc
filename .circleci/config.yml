@@ -36,6 +36,22 @@ jobs:
     docker:
       - image: circleci/node:12
 
+  doc:
+    docker:
+      - image: circleci/node:10
+    working_directory: *working_directory
+    steps:
+      - checkout
+      - restore_cache:
+          key: rmc-tag-master-{{ checksum "package.json" }}
+      - run:
+          name: Doc
+          command: npm run doc:deploy
+      - save_cache:
+          key: rmc-tag-master-{{ checksum "package.json" }}
+          paths:
+            - 'node_modules'
+
   # lerna 好像和 ci release 有些冲突
   publish:
     docker:
@@ -68,6 +84,14 @@ workflows:
     jobs:
       - build_node_10
       - build_node_12
+  # doc when master branch update
+  doc-deploy:
+    jobs:
+      - publish:
+          filters:
+            branches:
+              only: master
+
   # publish when release branch update
   release-brach:
     jobs:

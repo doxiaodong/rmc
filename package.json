@@ -7,6 +7,7 @@
     "prettier": "prettier \"packages/*/src/**/*.{ts,tsx}\"",
     "ci": "npm run lint && npm run types-test && npm run test && npm run compile",
     "doc": "umi-lib doc dev",
+    "doc:deploy": "umi-lib doc build && umi-lib doc deploy",
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
