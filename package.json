@@ -10,8 +10,8 @@
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
-    "pub": "echo publish!!!",
-    "pubs": "lerna publish",
+    "pub": "lerna publish",
+    "pub:next": "lerna publish --npm-tag=next",
     "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {

@@ -1,11 +1,10 @@
 {
   "publish": {
-    "contents": ["dist", "es", "lib"],
     "message": "release: publish"
   },
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
   },
   "packages": ["packages/*"],
-  "version": "0.0.0"
+  "version": "independent"
 }
