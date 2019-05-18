@@ -45,6 +45,12 @@ jobs:
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
       - run:
+          name: Install dependencies
+          command: npm i
+      - run:
+          name: Lerna Bootstrap
+          command: npm run bootstrap
+      - run:
           name: Doc
           command: npm run doc:deploy
       - save_cache:
