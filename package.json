@@ -12,8 +12,9 @@
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "prepub": "npm run ci",
+    "pub:rc": "lerna publish --canary",
     "pub": "lerna publish",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap --hoist"
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.2",

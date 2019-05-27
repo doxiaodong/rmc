@@ -1,11 +1,6 @@
 export default {
-  esm: { type: 'babel' },
-  cjs: { type: 'babel' },
-  umd: {
-    globals: {
-      react: 'React',
-    },
-  },
+  esm: { type: 'rollup' },
+  cjs: { type: 'rollup' },
   runtimeHelpers: true,
   doc: {
     typescript: true,
