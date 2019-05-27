@@ -1,7 +1,4 @@
 {
-  "publish": {
-    "verifyAccess": false
-  },
   "npmClient": "npm",
   "packages": ["packages/*"],
   "contents": "dist",
