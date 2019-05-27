@@ -45,6 +45,12 @@ jobs:
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
       - run:
+          name: Install dependencies
+          command: npm i
+      - run:
+          name: Lerna Bootstrap
+          command: npm run bootstrap
+      - run:
           name: Set git
           command: |
             git config --global user.name "circle-bot"
@@ -53,7 +59,7 @@ jobs:
           name: Publish
           command: |
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            if [$CIRCLE_TAG =~ "beta"]; then
+            if [[ $CIRCLE_TAG =~ "beta" ]]; then
               npm run pub:beta
             else
               npm run pub
