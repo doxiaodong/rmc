@@ -4,9 +4,6 @@
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@babel/runtime": "^7.4.4",
     "classnames": "^2.2.6"

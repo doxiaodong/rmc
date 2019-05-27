@@ -12,3 +12,8 @@
 ### packages
 
 - [x] rmc-pull-to-refresh
+
+
+### Release
+
+Release tag as v2.0.0 (or v2.0.0-beta.1 for beta version)

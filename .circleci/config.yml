@@ -36,29 +36,6 @@ jobs:
     docker:
       - image: circleci/node:12
 
-  doc:
-    docker:
-      - image: circleci/node:10
-    working_directory: *working_directory
-    steps:
-      - checkout
-      - restore_cache:
-          key: rmc-tag-master-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: npm i
-      - run:
-          name: Lerna Bootstrap
-          command: npm run bootstrap
-      - run:
-          name: Doc
-          command: npm run doc:deploy
-      - save_cache:
-          key: rmc-tag-master-{{ checksum "package.json" }}
-          paths:
-            - 'node_modules'
-
-  # lerna 好像和 ci release 有些冲突
   publish:
     docker:
       - image: circleci/node:10
@@ -68,15 +45,23 @@ jobs:
       - restore_cache:
           key: rmc-tag-master-{{ checksum "package.json" }}
       - run:
+          name: Set git
+          command: |
+            git config --global user.name "circle-bot"
+            git config --global user.email "duxiaodong@darlin.me"
+      - run:
           name: Publish
           command: |
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            npm run pub
+            if [$CIRCLE_TAG =~ "beta"]; then
+              npm run pub:beta
+            else
+              npm run pub
+            fi
             echo "Publish success!!"
       - run:
           name: Push to Github
           command: |
-            sh ./git.sh
             git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):master
             echo "Push success!!"
       - save_cache:
@@ -98,10 +83,11 @@ workflows:
             branches:
               only: master
 
-  # publish when release branch update
-  release-brach:
+  tagged-build:
     jobs:
       - publish:
           filters:
             branches:
-              only: release
+              ignore: /.*/
+            tags:
+              only: /v.*/

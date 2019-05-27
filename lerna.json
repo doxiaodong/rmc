@@ -1,8 +1,9 @@
 {
   "publish": {
-    "message": "release: publish"
+    "verifyAccess": false
   },
   "npmClient": "npm",
   "packages": ["packages/*"],
+  "contents": "dist",
   "version": "independent"
 }
