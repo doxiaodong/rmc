@@ -75,13 +75,6 @@ workflows:
     jobs:
       - build_node_10
       - build_node_12
-  # doc when master branch update
-  doc-deploy:
-    jobs:
-      - doc:
-          filters:
-            branches:
-              only: master
 
   tagged-build:
     jobs:
