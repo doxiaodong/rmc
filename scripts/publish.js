@@ -5,8 +5,12 @@ const $CIRCLE_TAG = process.env.CIRCLE_TAG;
 // CIRCLE_TAG rmc-pull-to-refresh@2.0.0 or rmc-pull-to-refresh@2.0.0-beta.1
 
 try {
-  const module = $CIRCLE_TAG.match(/\S+(?=@\d\.\d\.\d)/)[0];
-  const version = $CIRCLE_TAG.match(/(?<=@)\d\.\d\.\d\S*/)[0];
+  const module = $CIRCLE_TAG.match(
+    /\S+(?=@\d+(\.\d+){2}(-(alpha|beta)(\.\d+)?)?$)/,
+  )[0];
+  const version = $CIRCLE_TAG.match(
+    /(?<=@)\d+(\.\d+){2}(-(alpha|beta)(\.\d+)?)?$/,
+  )[0];
 
   console.log(module, version);
 
