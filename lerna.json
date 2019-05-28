@@ -1,6 +1,5 @@
 {
   "npmClient": "npm",
   "packages": ["packages/*"],
-  "contents": "dist",
   "version": "independent"
 }
