@@ -34,5 +34,6 @@ try {
 
   shell.echo('Publish success!!');
 } catch (error) {
+  console.error('Publish error', error);
   process.exit(1);
 }

@@ -61,6 +61,7 @@ jobs:
       - run:
           name: Publish
           command: |
+            set -o errexit
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
             CIRCLE_TAG=$CIRCLE_TAG node ./scripts/publish.js
       - run:
