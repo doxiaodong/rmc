@@ -15,11 +15,16 @@ try {
   console.log(module, version);
 
   shell.cd(`packages/${module}`);
-  shell.exec('pwd');
+  shell.pwd();
+
   shell.exec(`npm version ${version}`);
   shell.exec('git status');
   shell.exec('git add -A');
   shell.exec(`git commit -am"${$CIRCLE_TAG} [skip ci]"`);
+  shell.exec('git status');
+
+  shell.cd('../../');
+  shell.pwd();
 
   if (/beta/.test(version)) {
     shell.exec('npm run pub:beta');
