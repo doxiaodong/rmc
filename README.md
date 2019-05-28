@@ -15,4 +15,4 @@
 
 ### Release
 
-Release tag as `release: rmc-pull-to-refresh@2.0.0` (or `release: rmc-pull-to-refresh@2.0.0-beta.1` for beta version)
+Release tag as `rmc-pull-to-refresh@2.0.0` (or `rmc-pull-to-refresh@2.0.0-beta.1` for beta version)

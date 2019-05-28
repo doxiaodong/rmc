@@ -2,11 +2,13 @@ const shell = require('shelljs');
 
 const $CIRCLE_TAG = process.env.CIRCLE_TAG;
 
-// CIRCLE_TAG release: rmc-pull-to-refresh@2.0.0 or release: rmc-pull-to-refresh@2.0.0-beta.1
+// CIRCLE_TAG rmc-pull-to-refresh@2.0.0 or rmc-pull-to-refresh@2.0.0-beta.1
 
 try {
-  const module = $CIRCLE_TAG.match(/(?<=release: *?)\S+(?=@\d\.\d\.\d)/)[0];
+  const module = $CIRCLE_TAG.match(/\S+(?=@\d\.\d\.\d)/)[0];
   const version = $CIRCLE_TAG.match(/(?<=@)\d\.\d\.\d\S*/)[0];
+
+  console.log(module, version);
 
   shell.cd(`packages/${module}`);
   shell.exec('pwd');

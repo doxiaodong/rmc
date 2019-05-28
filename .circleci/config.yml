@@ -84,4 +84,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /release:.*/
+              only: /@\d\.\d\.\d/
