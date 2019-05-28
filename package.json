@@ -11,9 +11,6 @@
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
-    "prepub": "npm run ci",
-    "pub:beta": "lerna publish --canary --preid beta --yes --npm-tag beta",
-    "pub": "lerna publish --yes",
     "bootstrap": "lerna bootstrap --hoist"
   },
   "devDependencies": {

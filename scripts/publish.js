@@ -23,14 +23,16 @@ try {
   shell.exec(`git commit -am"${$CIRCLE_TAG} [skip ci]"`);
   shell.exec('git status');
 
+  if (/beta/.test(version)) {
+    shell.exec(`npm publish --tag beta`);
+  } else if (/alpha/.test(version)) {
+    shell.exec(`npm publish --tag alpha`);
+  } else {
+    shell.exec('npm publish');
+  }
+
   shell.cd('../../');
   shell.pwd();
-
-  if (/beta/.test(version)) {
-    shell.exec('npm run pub:beta');
-  } else {
-    shell.exec('npm run pub');
-  }
 
   shell.echo('Publish success!!');
 } catch (error) {
