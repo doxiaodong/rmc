@@ -12,7 +12,7 @@
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "prepub": "npm run ci",
-    "pub:beta": "lerna publish --dist-tag beta --preid beta --yes",
+    "pub:beta": "lerna publish --canary --preid beta --yes",
     "pub": "lerna publish --yes",
     "bootstrap": "lerna bootstrap --hoist"
   },
