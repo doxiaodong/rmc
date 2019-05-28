@@ -7,13 +7,12 @@
 - [x] Coverage show ? codecov
 - [ ] lerna Publish
 - [ ] lerna-changelog
-- [ ] circleci
+- [x] circleci
 
 ### packages
 
 - [x] rmc-pull-to-refresh
 
-
 ### Release
 
-Release tag as v2.0.0 (or v2.0.0-beta.1 for beta version)
+Release tag as `release: rmc-pull-to-refresh@2.0.0` (or `release: rmc-pull-to-refresh@2.0.0-beta.1` for beta version)

@@ -59,12 +59,7 @@ jobs:
           name: Publish
           command: |
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            if [[ $CIRCLE_TAG =~ "beta" ]]; then
-              npm run pub:beta
-            else
-              npm run pub
-            fi
-            echo "Publish success!!"
+            CIRCLE_TAG=$CIRCLE_TAG node ./scripts/publish.js
       - run:
           name: Push to Github
           command: |
@@ -89,4 +84,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /v.*/
+              only: /release:.*/
