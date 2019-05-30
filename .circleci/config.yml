@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 working_directory: &working_directory ~/workspace
 
 commands:
@@ -36,9 +36,7 @@ base: &base
   docker:
     - image: circleci/node:12
   steps:
-    - run-ci:
-      after-ci:
-        - run: 'echo "CI Complete"'
+    - run-ci
 
 jobs:
   build_node_10:
@@ -81,17 +79,19 @@ workflows:
   release-alpha:
     jobs:
       - publish:
-          publish-branch: alpha
-          filters:
-            branches:
-              only:
-                - alpha
+          publish-branch:
+            alpha
+            # filters:
+            #   branches:
+            #     only:
+            #       - alpha
 
   release:
     jobs:
       - publish:
-          publish-branch: master
-          filters:
-            branches:
-              only:
-                - master
+          publish-branch:
+            master
+            # filters:
+            #   branches:
+            #     only:
+            #       - master
