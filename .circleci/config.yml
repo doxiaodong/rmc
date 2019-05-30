@@ -81,7 +81,7 @@ workflows:
   release-alpha:
     jobs:
       - publish:
-          branch: alpha
+          publish-branch: alpha
           filters:
             branches:
               only:
@@ -90,7 +90,7 @@ workflows:
   release:
     jobs:
       - publish:
-          branch: master
+          publish-branch: master
           filters:
             branches:
               only:
