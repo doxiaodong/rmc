@@ -13,8 +13,8 @@
     "codecov": "cat ./coverage/lcov.info | codecov",
     "bootstrap": "lerna bootstrap --hoist",
     "prepub": "npm run ci",
-    "prepub:beta": "npm run ci",
-    "pub:beta": "lerna publish prerelease --yes -m \"release [skip ci]\"",
+    "prepub:alpha": "npm run ci",
+    "pub:alpha": "lerna publish prerelease --yes --dist-tag alpha -m \"release [skip ci]\"",
     "pub": "lerna publish --yes -m \"release [skip ci]\""
   },
   "devDependencies": {
