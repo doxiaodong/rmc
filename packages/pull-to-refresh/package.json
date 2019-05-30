@@ -21,6 +21,5 @@
   },
   "peerDependencies": {
     "react": "*"
-  },
-  "gitHead": "c2a9283bfdaa07831a6e01feed50f679014cbc24"
+  }
 }
