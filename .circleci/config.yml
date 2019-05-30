@@ -37,6 +37,8 @@ base: &base
     - image: circleci/node:12
   steps:
     - run-ci:
+      after-ci:
+        - run: 'echo "CI Complete"'
 
 jobs:
   build_node_10:
