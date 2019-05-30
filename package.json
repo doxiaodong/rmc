@@ -11,7 +11,9 @@
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
-    "bootstrap": "lerna bootstrap --hoist"
+    "bootstrap": "lerna bootstrap --hoist",
+    "pub:beta": "lerna publish prerelease --yes -m \"release [skip ci]\"",
+    "pub": "lerna publish --yes -m \"release [skip ci]\""
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.2",
