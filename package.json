@@ -30,8 +30,6 @@
     "umi-test": "^1.5.7"
   },
   "husky": {
-    "hooks": {
-      "pre-push": "npm run ci"
-    }
+    "hooks": {}
   }
 }
