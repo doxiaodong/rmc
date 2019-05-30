@@ -1,29 +1,33 @@
 version: 2
 working_directory: &working_directory ~/workspace
+
+base_steps: &base_steps
+  - checkout
+  - restore_cache:
+      key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
+  - run:
+      name: Install dependencies
+      command: npm i
+  - run:
+      name: Lerna Bootstrap
+      command: npm run bootstrap
+  - run:
+      name: Build
+      command: npm run ci
+  - run:
+      name: Report coverage
+      command: npm run codecov
+  - save_cache:
+      key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
+      paths:
+        - 'node_modules'
+
 base: &base
   working_directory: *working_directory
   docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
   steps:
-    - checkout
-    - restore_cache:
-        key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
-    - run:
-        name: Install dependencies
-        command: npm i
-    - run:
-        name: Lerna Bootstrap
-        command: npm run bootstrap
-    - run:
-        name: Build
-        command: npm run ci
-    - run:
-        name: Report coverage
-        command: npm run codecov
-    - save_cache:
-        key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
-        paths:
-          - 'node_modules'
+    <<: *base_steps
 
 jobs:
   build_node_10:
@@ -36,43 +40,25 @@ jobs:
     docker:
       - image: circleci/node:12
 
-  publish:
-    docker:
-      - image: circleci/node:12
-    working_directory: *working_directory
+  publish_alpha:
     steps:
-      - checkout
-      - restore_cache:
-          key: rmc-tag-master-{{ checksum "package.json" }}
+      <<: *base_steps
       - run:
-          name: Install dependencies
-          command: npm i
+        name: Publish alpha
+        command: |
+          set -o errexit
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+          BRANCH=alpha node ./scripts/publish.js
+
+  publish:
+    steps:
+      <<: *base_steps
       - run:
-          name: Lerna Bootstrap
-          command: npm run bootstrap
-      - run:
-          name: Build
-          command: npm run ci
-      - run:
-          name: Set git
-          command: |
-            git config --global user.name "circle-bot"
-            git config --global user.email "duxiaodong@darlin.me"
-      - run:
-          name: Publish
-          command: |
-            set -o errexit
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            CIRCLE_TAG=$CIRCLE_TAG node ./scripts/publish.js
-      - run:
-          name: Push to Github
-          command: |
-            git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):master
-            echo "Push success!!"
-      - save_cache:
-          key: rmc-tag-master-{{ checksum "package.json" }}
-          paths:
-            - 'node_modules'
+        name: Publish alpha
+        command: |
+          set -o errexit
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+          node ./scripts/publish.js
 
 workflows:
   version: 2
@@ -81,12 +67,18 @@ workflows:
       - build_node_10
       - build_node_12
 
-  tagged-build:
+  release-alpha:
+    jobs:
+      - publish_alpha:
+          filters:
+            branches:
+              only:
+                - alpha
+
+  release:
     jobs:
       - publish:
           filters:
             branches:
-              ignore: /.*/
-            tags:
-              # only: /@\d+(\.\d+){2}(-(alpha|beta)(\.\d+)?)?$/
-              only: /rmc-.*/
+              only:
+                - master

@@ -1,40 +1,18 @@
 const shell = require('shelljs');
 
-const $CIRCLE_TAG = process.env.CIRCLE_TAG;
-
-// CIRCLE_TAG rmc-pull-to-refresh@2.0.0 or rmc-pull-to-refresh@2.0.0-beta.1
+const $BRANCH = process.env.BRANCH;
 
 try {
-  const module = $CIRCLE_TAG.match(
-    /\S+(?=@\d+(\.\d+){2}(-(alpha|beta)(\.\d+)?)?$)/,
-  )[0];
-  const version = $CIRCLE_TAG.match(
-    /(?<=@)\d+(\.\d+){2}(-(alpha|beta)(\.\d+)?)?$/,
-  )[0];
+  shell.exec('git config --global user.name "circle-bot"');
+  shell.exec('git config --global user.email "duxiaodong@darlin.me"');
 
-  console.log(module, version);
-
-  shell.cd(`packages/${module}`);
-  shell.pwd();
-
-  shell.exec(`npm version ${version}`);
-  shell.exec('git status');
-  shell.exec('git add -A');
-  shell.exec(`git commit -am"${$CIRCLE_TAG} [skip ci]"`);
-  shell.exec('git status');
-
-  if (/beta/.test(version)) {
-    shell.exec(`npm publish --tag beta`);
-  } else if (/alpha/.test(version)) {
-    shell.exec(`npm publish --tag alpha`);
+  if ($BRANCH === 'alpha') {
+    shell.exec('npm run pub:alpha');
+    shell.echo('Publish alpha success!!');
   } else {
-    shell.exec('npm publish');
+    shell.exec('npm run pub');
+    shell.echo('Publish success!!');
   }
-
-  shell.cd('../../');
-  shell.pwd();
-
-  shell.echo('Publish success!!');
 } catch (error) {
   console.error('Publish error', error);
   process.exit(1);
