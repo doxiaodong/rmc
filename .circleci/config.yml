@@ -1,33 +1,42 @@
 version: 2
 working_directory: &working_directory ~/workspace
 
-base_steps: &base_steps
-  - checkout
-  - restore_cache:
-      key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
-  - run:
-      name: Install dependencies
-      command: npm i
-  - run:
-      name: Lerna Bootstrap
-      command: npm run bootstrap
-  - run:
-      name: Build
-      command: npm run ci
-  - run:
-      name: Report coverage
-      command: npm run codecov
-  - save_cache:
-      key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
-      paths:
-        - 'node_modules'
+commands:
+  run-ci:
+    parameters:
+      after-ci:
+        description: "Steps after CI"
+        type: steps
+        default: []
+ 
+    steps:
+      - checkout
+        - restore_cache:
+            key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
+        - run:
+            name: Install dependencies
+            command: npm i
+        - run:
+            name: Lerna Bootstrap
+            command: npm run bootstrap
+        - run:
+            name: Build
+            command: npm run ci
+        - run:
+            name: Report coverage
+            command: npm run codecov
+        - save_cache:
+            key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
+            paths:
+              - 'node_modules'
+        - steps: << parameters.after-ci >>
 
 base: &base
   working_directory: *working_directory
   docker:
     - image: circleci/node:12
   steps:
-    <<: *base_steps
+    - run-ci:
 
 jobs:
   build_node_10:
@@ -41,32 +50,36 @@ jobs:
       - image: circleci/node:12
 
   publish_alpha:
+    <<: *base
     steps:
-      <<: *base_steps
-      - run:
-        name: Publish alpha
-        command: |
-          set -o errexit
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-          BRANCH=alpha node ./scripts/publish.js
-      - run:
-        name: Push to Github
-        command: |
-          git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):alpha
+      - run-ci:
+        after-ci:
+          - run:
+            name: Publish alpha
+            command: |
+              set -o errexit
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              BRANCH=alpha node ./scripts/publish.js
+          - run:
+            name: Push to Github
+            command: |
+              git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):alpha
 
   publish:
+    <<: *base
     steps:
-      <<: *base_steps
-      - run:
-        name: Publish alpha
-        command: |
-          set -o errexit
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-          node ./scripts/publish.js
-      - run:
-        name: Push to Github
-        command: |
-          git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):master
+      - run-ci:
+        after-ci:
+          - run:
+            name: Publish alpha
+            command: |
+              set -o errexit
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              node ./scripts/publish.js
+          - run:
+            name: Push to Github
+            command: |
+              git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):master
 
 workflows:
   version: 2
