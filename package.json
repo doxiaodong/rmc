@@ -15,7 +15,7 @@
     "prepub": "npm run ci",
     "prepub:alpha": "npm run ci",
     "pub:alpha": "lerna publish prerelease --yes --dist-tag alpha -m \"release [skip ci]\"",
-    "pub": "lerna publish --yes -m \"release [skip ci]\""
+    "pub": "lerna publish --force-publish=* --yes -m \"release [skip ci]\""
   },
   "devDependencies": {
     "@types/enzyme": "^3.9.2",
