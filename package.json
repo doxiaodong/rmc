@@ -14,7 +14,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "prepub": "npm run ci",
     "prepub:beta": "npm run ci",
-    "pub:beta": "lerna publish prerelease --dist-tag beta --yes -m \"release [skip ci]\"",
+    "pub:beta": "lerna publish prerelease --yes -m \"release [skip ci]\"",
     "pub": "lerna publish --yes -m \"release [skip ci]\""
   },
   "devDependencies": {
