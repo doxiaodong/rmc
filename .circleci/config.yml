@@ -49,6 +49,10 @@ jobs:
           set -o errexit
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
           BRANCH=alpha node ./scripts/publish.js
+      - run:
+        name: Push to Github
+        command: |
+          git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):alpha
 
   publish:
     steps:
@@ -59,6 +63,10 @@ jobs:
           set -o errexit
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
           node ./scripts/publish.js
+      - run:
+        name: Push to Github
+        command: |
+          git push -q "https://$GITHUB_TOKEN@github.com/doxiaodong/rmc.git" $(git rev-parse --abbrev-ref HEAD):master
 
 workflows:
   version: 2
