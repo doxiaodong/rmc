@@ -1,13 +1,13 @@
 {
   "name": "rmc",
   "scripts": {
-    "compile": "umi-lib build",
+    "compile": "father build",
     "lint": "npm run prettier -- -l",
     "format": "npm run prettier -- --write",
     "prettier": "prettier \"packages/*/src/**/*.{ts,tsx}\"",
     "ci": "npm run lint && npm run types-test && npm run test && npm run compile",
-    "doc": "umi-lib doc dev",
-    "doc:deploy": "umi-lib doc build && umi-lib doc deploy",
+    "doc": "father doc dev",
+    "doc:deploy": "father doc build && father doc deploy",
     "test": "umi-test --coverage",
     "types-test": "tsc",
     "codecov": "cat ./coverage/lcov.info | codecov",
@@ -26,7 +26,7 @@
     "lerna": "^3.14.1",
     "prettier": "^1.17.1",
     "shelljs": "^0.8.3",
-    "umi-library": "^1.5.1",
+    "father": "^2.6.0",
     "umi-test": "^1.5.7"
   },
   "husky": {
