@@ -6,6 +6,8 @@ try {
   shell.exec('git config --global user.name "circle-bot"');
   shell.exec('git config --global user.email "duxiaodong@darlin.me"');
 
+  shell.exec('git rev-parse --abbrev-ref HEAD');
+
   if ($BRANCH === 'alpha') {
     shell.exec('npm run pub:alpha');
     shell.echo('Publish alpha success!!');
