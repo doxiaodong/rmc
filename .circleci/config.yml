@@ -59,8 +59,8 @@ jobs:
           name: Report coverage
           command: npm run codecov
       - run:
-        name: Doc
-        command: npm run doc:deploy
+          name: Doc
+          command: npm run doc:deploy
       - save_cache:
           key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
@@ -88,8 +88,8 @@ jobs:
           name: Report coverage
           command: npm run codecov
       - run:
-        name: Doc
-        command: npm run doc:deploy
+          name: Doc
+          command: npm run doc:deploy
       - save_cache:
           key: rmc-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
