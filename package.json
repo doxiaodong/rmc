@@ -1,5 +1,6 @@
 {
   "name": "rmc",
+  "private": true,
   "scripts": {
     "compile": "father build",
     "lint": "npm run prettier -- -l",
